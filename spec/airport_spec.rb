@@ -5,6 +5,7 @@ describe Airport do
 
   subject(:airport) { described_class.new }
   subject(:plane) { described_class.new }
+  subject(:plane2) { described_class.new }
 
   before(:each) do
     airport.land(plane)
@@ -17,6 +18,10 @@ describe Airport do
 
     it 'adds a plane into the planes array' do
       expect(airport.planes).to eq [plane]
+    end
+
+    it 'raises an error when airport is full' do
+      expect { airport.land(plane2) }.to raise_error "Airport is full"
     end
   end
 

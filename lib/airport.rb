@@ -2,11 +2,15 @@ class Airport
 
 attr_reader :planes
 
-  def initialize
+DEFAULT_CAPACITY = 1
+
+  def initialize(capacity = DEFAULT_CAPACITY)
     @planes = []
+    @capacity = capacity
   end
 
   def land(plane)
+    fail "Airport is full" if @planes.count >= DEFAULT_CAPACITY
     planes.push(plane)
   end
 
