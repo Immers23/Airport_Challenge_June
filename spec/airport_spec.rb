@@ -11,6 +11,12 @@ describe Airport do
     airport.land(plane)
   end
 
+  describe '#capacity=' do
+    it 'changes the capacity to a new value' do
+      expect(airport).to respond_to(:capacity)
+    end
+  end
+
   describe '#land' do
     it 'instructs a plane to land' do
       expect(airport).to respond_to(:land).with(1).argument
