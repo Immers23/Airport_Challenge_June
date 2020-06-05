@@ -4,6 +4,11 @@ require 'plane'
 describe Airport do
 
   subject(:airport) { described_class.new }
+  subject(:plane) { described_class.new }
+
+  before(:each) do
+    airport.land(plane)
+  end
 
   describe '#land' do
     it 'instructs a plane to land' do
@@ -11,8 +16,6 @@ describe Airport do
     end
 
     it 'adds a plane into the planes array' do
-      plane = Plane.new
-      airport.land(plane)
       expect(airport.planes).to eq [plane]
     end
   end
@@ -23,13 +26,9 @@ describe Airport do
     end
 
     it 'removes the plane from the plane array' do
-      plane = Plane.new
-      airport.land(plane)
       airport.take_off(plane)
       expect(airport.planes).to eq []
     end
   end
-
-
 
 end
