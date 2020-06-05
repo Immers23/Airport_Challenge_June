@@ -10,14 +10,8 @@ describe Plane do
 
   it 'will only take off from an airport that a plane is in' do
     airport.capacity=2
-    p airport
     airport.land(plane)
-    p airport
     airport.land(plane2)
-    p airport
-    # airport.take_off(plane2)
     expect { airport2.take_off(plane2) }.to raise_error "Plane does not exist"
-    p airport
   end
-
 end

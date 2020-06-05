@@ -13,12 +13,12 @@ DEFAULT_CAPACITY = 1
   end
 
   def land(plane)
-    fail "Airport is full" if @planes.count >= @capacity
+    fail "Airport is full" if planes.count >= capacity
     planes.push(plane)
   end
 
   def take_off(plane)
-    fail "Plane does not exist" unless @planes.include?(plane)
+    fail "Plane does not exist" unless planes.include?(plane)
     planes.pop
   end
 
