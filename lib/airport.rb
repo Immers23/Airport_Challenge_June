@@ -18,8 +18,18 @@ DEFAULT_CAPACITY = 1
   end
 
   def take_off(plane)
+    fail "plane is already airbourne" if plane.in_air
     fail "Plane does not exist in airport" unless planes.include?(plane)
-    planes.pop
+
+    plane.clear_for_take_off
+    remove_plane(plane)
   end
+
+private
+
+  def remove_plane(plane)
+    @planes.delete(plane)
+  end
+
 
 end

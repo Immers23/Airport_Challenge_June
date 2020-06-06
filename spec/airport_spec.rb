@@ -7,6 +7,7 @@ describe Airport do
   let(:airport2) { Airport.new }
   let(:plane) { Plane.new }
   let(:plane2) { Plane.new }
+  let(:plane3) { Plane.new }
 
   before(:each) do
     airport.land(plane)
@@ -18,10 +19,18 @@ describe Airport do
     expect { airport2.take_off(plane2) }.to raise_error "Plane does not exist in airport"
   end
 
-  it 'planes that are already flying cannot take off' do
+  it 'planes that have taken off from an airport cannot take off again' do
     airport.take_off(plane)
     airport.land(plane2)
-    expect { airport.take_off(plane) }.to raise_error "Plane does not exist in airport"
+    expect { airport.take_off(plane) }.to raise_error "plane is already airbourne"
+  end
+
+  it 'planes that are flying cannot be in an airport' do
+    airport.capacity=3
+    airport.land(plane2)
+    airport.land(plane3)
+    airport.take_off(plane2)
+    expect(airport.planes.include? plane2).to eq false
   end
 
   describe '#capacity=' do
