@@ -1,5 +1,6 @@
 require 'plane'
 require 'airport'
+require 'weather'
 
 describe Airport do
 
@@ -11,16 +12,19 @@ describe Airport do
   let(:plane4) { double(in_air: false) }
 
   before(:each) do
+    allow(Weather).to receive(:stormy?) { false } 
     airport.land(plane)
   end
 
   it 'will only take off from an airport that a plane is in' do
     airport.land(plane2)
     airport.land(plane3)
+    allow(plane2).to receive(:weather)
     expect { airport2.take_off(plane2) }.to raise_error "Plane does not exist in airport"
   end
 
   it 'planes that have taken off from an airport cannot take off again' do
+    allow(plane).to receive(:weather)
     allow(plane).to receive(:in_air).and_return(:true)
     expect { airport.take_off(plane) }.to raise_error "plane is already airbourne"
   end
@@ -54,6 +58,7 @@ describe Airport do
 
     it 'removes the plane from the plane array' do
       allow(plane).to receive(:clear_for_take_off)
+      allow(plane).to receive(:weather)
       airport.take_off(plane)
       expect(airport.planes).to eq []
     end

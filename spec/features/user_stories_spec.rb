@@ -5,7 +5,6 @@ require 'plane'
 describe 'User stories' do
   let(:airport) { Airport.new }
   let(:plane) { Plane.new }
-  let(:weather) { Weather.new }
   # As an air traffic controller
   # So I can get passengers to a destination
   # I want to instruct a plane to land at an airport
@@ -16,6 +15,7 @@ describe 'User stories' do
   # So I can get passengers on the way to their destination
   # I want to instruct a plane to take off from an airport and confirm that it is no longer in the airport
   it "so planes can take off from airports instruct a plane to take off" do
+    allow(Weather).to receive(:stormy?) { false }
     airport.land(plane)
     airport.take_off(plane)
     expect(airport.planes).to eq []
@@ -41,8 +41,8 @@ describe 'User stories' do
   # To ensure safety
   # I want to prevent takeoff when weather is stormy
   it 'prevents takeoff when the weather is story' do
+    allow(Weather).to receive(:stormy?) { true }
     airport.land(plane)
-    weather.forecast == 'stormy'
     expect{ airport.take_off(plane) }.to raise_error 'Cannot take off when stormy'
   end
 
