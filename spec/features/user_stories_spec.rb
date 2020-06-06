@@ -1,12 +1,15 @@
+require 'airport'
+require 'weather'
+require 'plane'
+
 describe 'User stories' do
   let(:airport) { Airport.new }
   let(:plane) { Plane.new }
+  let(:weather) { Weather.new }
   # As an air traffic controller
   # So I can get passengers to a destination
   # I want to instruct a plane to land at an airport
   it "so planes land at airports instruct a plane to land" do
-    # airport = Airport.new
-    # plane = Plane.new
     expect{ airport.land(plane) }.not_to raise_error
   end
   # As an air traffic controller
@@ -29,10 +32,18 @@ describe 'User stories' do
   # As the system designer
   # So that the software can be used for many different airports
   # I would like a default airport capacity that can be overridden as appropriate
-  #
   it 'allows for the default capacity to be changed' do
     airport.capacity=5
     expect(airport.capacity).to eq 5
+  end
+
+  # As an air traffic controller
+  # To ensure safety
+  # I want to prevent takeoff when weather is stormy
+  it 'prevents takeoff when the weather is story' do
+    airport.land(plane)
+    weather.forecast == 'stormy'
+    expect{ airport.take_off(plane) }.to raise_error 'Cannot take off when stormy'
   end
 
 end
