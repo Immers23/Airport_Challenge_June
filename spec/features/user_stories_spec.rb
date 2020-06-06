@@ -22,6 +22,8 @@ describe 'User stories' do
   # I want to prevent landing when the airport is full
   it "prevents landing of a plane when the airport is full" do
     airport.land(plane)
+    airport.land(plane)
+    airport.land(plane)
     expect{ airport.land(plane) }.to raise_error 'Airport is full'
   end
   # As the system designer
