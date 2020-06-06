@@ -4,11 +4,24 @@ require 'plane'
 describe Airport do
 
   subject(:airport) { described_class.new }
-  subject(:plane) { described_class.new }
-  subject(:plane2) { described_class.new }
+  let(:airport2) { Airport.new }
+  let(:plane) { Plane.new }
+  let(:plane2) { Plane.new }
 
   before(:each) do
     airport.land(plane)
+  end
+
+  it 'will only take off from an airport that a plane is in' do
+    airport.capacity=2
+    airport.land(plane2)
+    expect { airport2.take_off(plane2) }.to raise_error "Plane does not exist in airport"
+  end
+
+  it 'planes that are already flying cannot take off' do
+    airport.take_off(plane)
+    airport.land(plane2)
+    expect { airport.take_off(plane) }.to raise_error "Plane does not exist in airport"
   end
 
   describe '#capacity=' do
